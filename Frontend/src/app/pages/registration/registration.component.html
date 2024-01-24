@@ -1,0 +1,282 @@
+<section>
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-8 col-xl-6">
+        <div class="card rounded-3">
+          <img src="../assets/registration.png" class="w-100"
+            style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;" alt="Sample photo">
+          <div class="card-body p-4 p-md-5">
+            <h3 class="mb-1 pb-2 pb-md-0  px-md-2 text-center">Registration Form</h3>
+
+            <form class="px-md-2">
+              <div class="row pb-2">
+                <div class="col-12 text-center">
+                  <div class="btn-group">
+                    <button type="button" (click)="isJobSeeker = true" class="btn"
+                      [ngClass]="isJobSeeker? 'btn-success':'btn-outline-primary'"> Are You a Job Seeker</button>
+                    <button type="button" (click)="isJobSeeker = false" class="btn"
+                      [ngClass]="!isJobSeeker? 'btn-success':'btn-outline-primary'">Register as an Employer</button>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="isJobSeeker">
+                <div class="form-outline mb-1"
+                  [class.has-error]="FullName.invalid && (FullName.dirty || FullName.touched)">
+                  <label class="form-label" for="form3Example1q">Full Name</label>
+                  <input type="text" [(ngModel)]="JobSeekerObj.FullName" name="FullName" #FullName="ngModel" required
+                    minlength="3" maxlength="50" pattern="[a-zA-Z ]*" class="form-control" />
+                  <div *ngIf="FullName.invalid && (FullName.dirty || FullName.touched)" class="text-danger">
+                    <div *ngIf="jobSeekerForm.get('FullName')?.hasError('required')">Full Name is required.</div>
+                    <div *ngIf="jobSeekerForm.get('FullName')?.hasError('minlength')">Full Name must be at least 3
+                      characters long.</div>
+                    <div *ngIf="jobSeekerForm.get('FullName')?.hasError('maxlength')">Full Name cannot exceed 50
+                      characters.</div>
+                    <div *ngIf="jobSeekerForm.get('FullName')?.hasError('pattern')">Invalid characters. Only letters and
+                      spaces are allowed.</div>
+                  </div>
+                </div>
+
+
+
+
+                <div class="row mb-1 pb-2 pb-md-0">
+                  <div class="col-md-6">
+
+                    <div class="form-outline datepicker">
+                      <label class="form-label" for="exampleDatepicker1">Email</label>
+                      <input type="email" [(ngModel)]="JobSeekerObj.EmailId" name="EmailId" #EmailId="ngModel" required
+                        class="form-control" />
+                      <div *ngIf="EmailId.invalid && (EmailId.dirty || EmailId.touched)" class="text-danger">
+
+                        <div *ngIf="jobSeekerForm.get('EmailId')?.hasError('required')">Email is Required.</div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+
+                    <div class="form-outline datepicker">
+                      <label for="exampleDatepicker1" class="form-label">Mobile</label>
+                      <input type="text" class="form-control" [(ngModel)]="JobSeekerObj.MobileNo" name="MobileNo"
+                        #MobileNo="ngModel" required pattern="^[0-9]{10}$" />
+                      <div *ngIf="MobileNo.invalid && (MobileNo.dirty || MobileNo.touched)" class="text-danger">
+                        <div *ngIf="jobSeekerForm.get('MobileNo')?.hasError('required')">Mobile number is required.
+                        </div>
+                        <div *ngIf="jobSeekerForm.get('MobileNo')?.hasError('pattern')">Invalid mobile number. It should
+                          be a 10-digit number.
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+
+                  <div class="col-6">
+
+                    <div class="form-outline datepicker">
+                      <label for="exampleDatepicker1" class="form-label">Select Experience</label>
+
+                      <select name="ExperienceStatus" class="form-control" [(ngModel)]="JobSeekerObj.ExperienceStatus">
+                        <option value="" selected disabled>Select Experience</option>
+                        <option value="Fresher">Fresher</option>
+                        <option value="Experience">Experience</option>
+
+                      </select>
+                    </div>
+
+
+
+                  </div>
+                </div>
+                <div class="form-outline mb-1">
+                  <label class="form-label" for="form3Example1q">Resume Url</label>
+                  <input type="text" [(ngModel)]="JobSeekerObj.ResumeUrl" name="ResumeUrl" #ResumeUrl="ngModel" required
+                    class="form-control" />
+                  <div *ngIf="ResumeUrl.invalid && (ResumeUrl.dirty || ResumeUrl.touched)" class="text-danger">
+
+                    <div *ngIf="jobSeekerForm.get('ResumeUrl')?.hasError('required')">Resume is Required.</div>
+
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 text-center">
+                    <button (click)="registerAsJobSeeker()" class="btn btn-success btn-lg mb-1">Register</button>
+
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="!isJobSeeker">
+                <div class="form-outline mb-1"
+                  [class.has-error]="CompanyName.invalid && (CompanyName.dirty || CompanyName.touched)">
+                  <label class="form-label" for="form3Example1q">Full Name</label>
+                  <input type="text" [(ngModel)]="employerObj.CompanyName" name="CompanyName" #CompanyName="ngModel"
+                    required minlength="3" maxlength="50" pattern="[a-zA-Z ]*" class="form-control" />
+                  <div *ngIf="CompanyName.invalid && (CompanyName.dirty || CompanyName.touched)" class="text-danger">
+                    <div *ngIf="jobSeekerForm.get('CompanyName')?.hasError('required')">Full Name is required.</div>
+                    <div *ngIf="jobSeekerForm.get('CompanyName')?.hasError('minlength')">Full Name must be at least 3
+                      characters long.</div>
+                    <div *ngIf="jobSeekerForm.get('CompanyName')?.hasError('maxlength')">Full Name cannot exceed 50
+                      characters.</div>
+                    <div *ngIf="jobSeekerForm.get('CompanyName')?.hasError('pattern')">Invalid characters. Only letters
+                      and
+                      spaces are allowed.</div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4 mb-1">
+
+                    <div class="form-outline datepicker">
+                      <label class="form-label" for="exampleDatepicker1">Email</label>
+                      <input type="email" [(ngModel)]="employerObj.EmailId" name="EmailId" #EmailId="ngModel" required
+                        class="form-control" />
+                      <div *ngIf="EmailId.invalid && (EmailId.dirty || EmailId.touched)" class="text-danger">
+
+                        <div *ngIf="jobSeekerForm.get('EmailId')?.hasError('required')">Email is Required.</div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col-md-4 mb-1">
+
+                    <div class="form-outline datepicker">
+                      <label for="exampleDatepicker1" class="form-label">Mobile</label>
+                      <input type="text" class="form-control" [(ngModel)]="employerObj.MobileNo" name="MobileNo"
+                        #MobileNo="ngModel" required pattern="^[0-9]{10}$" />
+                      <div *ngIf="MobileNo.invalid && (MobileNo.dirty || MobileNo.touched)" class="text-danger">
+                        <div *ngIf="jobSeekerForm.get('MobileNo')?.hasError('required')">Mobile number is required.
+                        </div>
+                        <div *ngIf="jobSeekerForm.get('MobileNo')?.hasError('pattern')">Invalid mobile number. It should
+                          be a 10-digit number.
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col-md-4 mb-1">
+
+                    <div class="form-outline datepicker">
+                      <label for="exampleDatepicker1" class="form-label">Phone</label>
+                      <input type="text" class="form-control" [(ngModel)]="employerObj.PhoneNo" name="PhoneNo"
+                        #PhoneNo="ngModel" required pattern="^[0-9]{10}$" />
+                      <div *ngIf="PhoneNo.invalid && (PhoneNo.dirty || PhoneNo.touched)" class="text-danger">
+                        <div *ngIf="jobSeekerForm.get('PhoneNo')?.hasError('required')">Phone number is required.
+                        </div>
+                        <div *ngIf="jobSeekerForm.get('PhoneNo')?.hasError('pattern')">Invalid Phone number. It should
+                          be a 10-digit number.
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="row mb-1 pb-2 pb-md-0">
+                  <div class="col-md-6">
+                    <div class="form-outline mb-1">
+                      <label class="form-label" for="form3Example1q">Company Logo Url</label>
+                      <input type="text" [(ngModel)]="employerObj.LogoURL" name="LogoURL" #LogoURL="ngModel" required
+                        class="form-control" />
+                      <div *ngIf="LogoURL.invalid && (LogoURL.dirty || LogoURL.touched)" class="text-danger">
+
+                        <div *ngIf="jobSeekerForm.get('LogoURL')?.hasError('required')">Company Logo is Required.</div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-outline mb-1">
+                      <label class="form-label" for="form3Example1q">GST No</label>
+                      <input type="text" [(ngModel)]="employerObj.GstNo" name="GstNo" #GstNo="ngModel" required
+                        class="form-control" />
+                      <div *ngIf="GstNo.invalid && (GstNo.dirty || GstNo.touched)" class="text-danger">
+
+                        <div *ngIf="jobSeekerForm.get('GstNo')?.hasError('required')">GST No is Required.</div>
+
+                      </div>
+
+                    </div>
+
+
+                  </div>
+                </div>
+
+
+
+
+                <div class="row mb-1 pb-2 pb-md-0 ">
+                  <div class="col-md-4">
+
+                    <div class="form-outline">
+                      <label class="form-label" for="form3Example1w">City</label>
+                      <input type="text" [(ngModel)]="employerObj.City" name="City" #City="ngModel" required
+                        class="form-control" />
+                      <div *ngIf="City.invalid && (City.dirty || City.touched)" class="text-danger">
+
+                        <div *ngIf="jobSeekerForm.get('City')?.hasError('required')">City is Required.</div>
+
+                      </div>
+
+                    </div>
+
+
+                  </div>
+                  <div class="col-md-4">
+
+                    <div class="form-outline">
+                      <label class="form-label" for="form3Example1w">State</label>
+                      <input type="text" [(ngModel)]="employerObj.State" name="State" #State="ngModel" required
+                        class="form-control" />
+                      <div *ngIf="State.invalid && (State.dirty || State.touched)" class="text-danger">
+
+                        <div *ngIf="jobSeekerForm.get('State')?.hasError('required')">State is Required.</div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+                  <div class="col-md-4">
+
+                    <div class="form-outline">
+                      <label class="form-label" for="form3Example1w">Pin-Code</label>
+                      <input type="text" class="form-control" [(ngModel)]="employerObj.PinCode" name="PinCode"
+                        #PinCode="ngModel" required pattern="^[0-9]{6}$" />
+                      <div *ngIf="PinCode.invalid && (PinCode.dirty || PinCode.touched)" class="text-danger">
+                        <div *ngIf="jobSeekerForm.get('PinCode')?.hasError('required')">Pin Code is required.
+                        </div>
+                        <div *ngIf="jobSeekerForm.get('PinCode')?.hasError('pattern')">Invalid PPin Code. It should
+                          be a 6-digit number.
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="form-outline mb-1">
+                  <label class="form-label" for="form3Example1w">Address</label>
+                  <textarea class="form-control" [(ngModel)]="employerObj.CompanyAddress" name="CompanyAddress"
+                    rows="3"></textarea>
+                </div>
+
+                <div class="row">
+                  <div class="col-12 text-center">
+                    <button (click)="register()" class="btn btn-success btn-lg mb-1">Register</button>
+
+                  </div>
+                </div>
+              </div>
+
+
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
